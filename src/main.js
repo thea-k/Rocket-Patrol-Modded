@@ -1,3 +1,8 @@
+/*
+ * Name: Thea Knasiak
+ * Project: Modded Rocket Patrol Assignment
+*/
+
 let config = {
     type: Phaser.CANVAS,
     width: 640,
