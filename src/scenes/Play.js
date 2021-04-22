@@ -4,8 +4,8 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/background.png');
-        this.load.image('foreground', 'assets/Foreground.png')
+        this.load.image('foreground', 'assets/background.png');
+        this.load.image('background', 'assets/foreground.png');
         this.load.image('rocket', 'assets/rocket.png');
         this.load.image('ship', 'assets/spaceship.png');
         this.load.spritesheet('explosion', 'assets/explosion.png',
@@ -16,12 +16,12 @@ class Play extends Phaser.Scene {
     }
 
     create () {
-        this.background = this.add.tileSprite(
-            0,0,640,480,'background',
-        ).setOrigin(0,0);
-
         this.foreground = this.add.tileSprite(
             0,0,640,480, 'foreground',
+        ).setOrigin(0,0);
+
+        this.background = this.add.tileSprite(
+            0,0,640,480,'background',
         ).setOrigin(0,0);
 
         this.p1Rocket = new Rocket(
@@ -159,7 +159,9 @@ class Play extends Phaser.Scene {
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLeft)) {
             this.scene.start("menuScene");
         }
-        this.starfield.tilePositionX -= 4; // background scroll to the right
+        this.background.tilePositionX -= 2; // background scroll to the right
+        this.background.tilePositionY -= 2; // background scroll to the right
+        this.foreground.tilePositionY -= 2;
 
         // epic function call for epic movement
         if (!this.gameOver) {
