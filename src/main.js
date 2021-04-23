@@ -1,6 +1,12 @@
 /*
  * Name: Thea Knasiak
  * Project: Modded Rocket Patrol Assignment
+ * Mods: Added parallax scrolling (10 pts)
+ *       Changed all assets (UI, player, enemies, sfx) (60 pts)
+ *       New weapon (20 pts)
+ *       Display time remaining, in seconds, on the screen (10 pts)
+ * Date: 4/19/2021
+ * Time it took to complete: 
 */
 
 let config = {
@@ -15,4 +21,4 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height / 15; //width of the border will be 1/15 the height
 let borderPadding = borderUISize / 3; //width of the padded will be 1/3 the borderUISize
 
-let keyLeft, keyRight, keyF, keyR;
+let keyLeft, keyRight, keyF, keyR, keyG;
