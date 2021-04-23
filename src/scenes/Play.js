@@ -6,9 +6,10 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.image('foreground', 'assets/background.png');
         this.load.image('background', 'assets/foreground.png');
-        this.load.image('bee', 'assets/Bee.png');
+        this.load.image('bee', 'assets/Bees.png');
         this.load.image('purpleFlower', 'assets/Flower1.png');
         this.load.image('pinkFlower', 'assets/Flower2.png');
+        this.load.image('blueFlower', 'assets/Flower3.png');
         this.load.spritesheet('explosion', 'assets/explosion.png',
             {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.audio('sfx_select', 'assets/blip_select12.wav');
@@ -52,14 +53,14 @@ class Play extends Phaser.Scene {
             20
         ).setOrigin(0,0);
 
-        // this.ship3 = new Ship(
-        //     this,
-        //     game.config.width,
-        //     borderUISize*6 + borderPadding*4,
-        //     'ship',
-        //     0,
-        //     10
-        // ).setOrigin(0,0);
+        this.flower3 = new Ship(
+            this,
+            game.config.width,
+            borderUISize*6 + borderPadding*4,
+            'blueFlower',
+            0,
+            10
+        ).setOrigin(0,0);
 
         // green UI background
         this.add.rectangle(
@@ -67,7 +68,7 @@ class Play extends Phaser.Scene {
             borderUISize + borderPadding, 
             game.config.width, 
             borderUISize*2, 
-            0x00FF00, 
+            0xF26866, 
             ).setOrigin(0,0);
         // white borders
         this.add.rectangle(
@@ -97,17 +98,32 @@ class Play extends Phaser.Scene {
         this.p1Score = 0;
 
         let scoreConfig = {
-            fontFamily: 'Chalk',
+            fontFamily: 'Courier New',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#F2F27E',
+            color: '#F26866',
             align: 'right',
             padding: {
-                top: 5,
-                bottom: 5
+                top: 0,
+                bottom: 0,
+                right: 25
             },
-            fixedWidth: 100
+            fixedWidth: 75
         }
+
+        let timerConfig = {
+            fontFamily: 'Courier New',
+            fontSize: '28px',
+            backgroundColor: '#F2F27E',
+            align: 'right',
+            padding: {
+                top: 0,
+                bottom: 0,
+                left: 100
+            },
+            fixedWidth: 75
+        }
+
         //binding scoreLeft to scene
         this.scoreLeft = this.add.text(
                                     borderUISize +  borderPadding,
@@ -138,6 +154,14 @@ class Play extends Phaser.Scene {
          /*time that ellapses (in milliseconds), callback function itself,
             any arguments we'd want to call in the function(null, this is a 
             reference to the play scene)*/
+
+        this.timeLeft = this.add.text(
+                                    borderUISize*12 + borderPadding*13,
+                                    borderUISize + borderPadding*2,
+                                    this.time.delayedCall(
+                                                game.settings.gameTimer, () => {},
+                                                null,this),
+                                    timerConfig);
         
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(
@@ -170,11 +194,11 @@ class Play extends Phaser.Scene {
             this.bee.update();
             this.flower1.update();
             this.flower2.update();
-            // this.ship3.update();
+            this.flower3.update();
         }
         
 
-        if (this.checkCollision(this.beehive, this.flower1)) {
+        if (this.checkCollision(this.bee, this.flower1)) {
             this.bee.reset();
             this.shipExplode(this.flower1);
         }
@@ -182,10 +206,10 @@ class Play extends Phaser.Scene {
             this.bee.reset();
             this.shipExplode(this.flower2);
         }
-        // if (this.checkCollision(this.p1Rocket, this.ship3)) {
-        //     this.p1Rocket.reset();
-        //     this.shipExplode(this.ship3);
-        // }
+        if (this.checkCollision(this.bee, this.flower3)) {
+            this.bee.reset();
+            this.shipExplode(this.flower3);
+        }
     }
 
     checkCollision(rocket, ship) {
@@ -200,20 +224,21 @@ class Play extends Phaser.Scene {
     }
 
     shipExplode(ship) {
-            //hide ship
-            ship.alpha = 0;
-            // create explosion at ship's position
-            let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
-            boom.anims.play('explode');             //play explode animation
-            boom.on('animationcomplete', () => {    //callback after anim completes
-                ship.reset();                       //reset ship position
-                ship.alpha = 1;                     //make ship visible again
-                boom.destroy();                     //remove explosion sprite
-                this.sound.play('sfx_explosion');
-            });
+        //hide ship
+        ship.alpha = 0;
+        // create explosion at ship's position
+        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
+        boom.anims.play('explode');             //play explode animation
+        boom.on('animationcomplete', () => {    //callback after anim completes
+            ship.reset();                       //reset ship position
+            ship.alpha = 1;                     //make ship visible again
+            boom.destroy();                     //remove explosion sprite
+            this.sound.play('sfx_explosion');
+        });
 
-            //add score and repaint
-            this.p1Score += ship.points;
-            this.scoreLeft.text = this.p1Score;
+        //add score and repaint    
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
+            
     }
 }

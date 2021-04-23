@@ -6,7 +6,7 @@
  *       New weapon (20 pts)
  *       Display time remaining, in seconds, on the screen (10 pts)
  * Date: 4/19/2021
- * Time it took to complete: 
+ * Time it took to complete: like way too long i feel like my eyes are melting
 */
 
 let config = {
