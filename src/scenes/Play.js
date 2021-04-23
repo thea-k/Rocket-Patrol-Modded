@@ -96,7 +96,7 @@ class Play extends Phaser.Scene {
         this.p1Score = 0;
 
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Chalk',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -110,7 +110,7 @@ class Play extends Phaser.Scene {
         //binding scoreLeft to scene
         this.scoreLeft = this.add.text(
                                     borderUISize +  borderPadding,
-                                    borderUISize +borderPadding*2,
+                                    borderUISize + borderPadding*2,
                                     this.p1Score,
                                     scoreConfig);
 
