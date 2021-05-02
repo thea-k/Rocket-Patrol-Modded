@@ -4,14 +4,16 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('foreground', 'assets/background.png');
-        this.load.image('background', 'assets/foreground.png');
+        this.load.image('background1', 'assets/Background1.png');
+        this.load.image('background2', 'assets/Background2.png');
+        this.load.image('clouds', 'assets/Clouds.png');
         this.load.image('bee', 'assets/Bees.png');
         this.load.image('purpleFlower', 'assets/Flower1.png');
         this.load.image('pinkFlower', 'assets/Flower2.png');
         this.load.image('blueFlower', 'assets/Flower3.png');
         this.load.spritesheet('explosion', 'assets/explosion.png',
             {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.audio('bgm', 'assets/bgm.wav');
         this.load.audio('sfx_select', 'assets/blip_select12.wav');
         this.load.audio('sfx_explosion', 'assets/explosion38.wav');
         this.load.audio('sfx_rocket', 'assets/rocket_shot.wav');
@@ -19,11 +21,11 @@ class Play extends Phaser.Scene {
 
     create () {
         this.foreground = this.add.tileSprite(
-            0,0,640,480, 'foreground',
+            0,0,640,480, 'background1',
         ).setOrigin(0,0);
 
         this.background = this.add.tileSprite(
-            0,0,640,480,'background',
+            0,0,640,480,'background2',
         ).setOrigin(0,0);
 
         this.bee = new Rocket(
@@ -186,8 +188,9 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
         this.background.tilePositionX -= 2; // background scroll to the right
-        this.background.tilePositionY -= 2; // background scroll to the right
-        this.foreground.tilePositionY -= 2;
+        this.background2.tilePositionX -= 2;
+        this.clouds.tilePositionX -= 2;
+        
 
         // epic function call for epic movement
         if (!this.gameOver) {
