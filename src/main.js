@@ -3,9 +3,8 @@
  * Project: Modded Rocket Patrol Assignment
  * Mods: Added parallax scrolling (10 pts)
  *       Changed all assets (UI, player, enemies, sfx) (60 pts)
- *       New weapon (20 pts)
- *       Display time remaining, in seconds, on the screen (10 pts)
- * Date: 4/19/2021
+ *       Faster, smaller enemy type worth more ponts (20 pts)
+ * Date: 5/2/2021
  * Time it took to complete: like way too long i feel like my eyes are melting
 */
 

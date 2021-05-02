@@ -5,12 +5,16 @@ class Menu extends Phaser.Scene {
 
     preload() {
         this.load.image('menu', 'assets/Menu.png');
-        this.load.audio('sfx_select', 'assets/blip_select12.wav');
-        this.load.audio('sfx_explosion', 'assets/explosion38.wav');
-        this.load.audio('sfx_rocket', 'assets/rocket_shot.wav');
+        this.load.audio('bgm', 'assets/bgm.wav');
+        this.load.audio('sfx_select', 'assets/sfx_select.wav');
+        this.load.audio('pop', 'assets/pop.wav');
+        this.load.audio('sfx_bee', 'assets/sfx_bee.wav');
     }
 
     create() {
+        this.bgm = this.sound.add('bgm', { volume: 1, loop:true });
+        this.bgm.play();
+
         let menu = this.add.tileSprite(
             0,0,640,480, 'menu',
         ).setOrigin(0,0);
@@ -45,20 +49,22 @@ class Menu extends Phaser.Scene {
         //         menuConfig).setOrigin(0.5);
         
         keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);    
+        keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
     }
 
-    update() {
+    update() {           
         if (Phaser.Input.Keyboard.JustDown(keyLeft)) {
             //easy difficulty
             game.settings = {
               spaceshipSpeed: 3,
               gameTimer: 60000    
             }
+            this.bgm.stop();
             this.sound.play('sfx_select');
             this.scene.start('playScene');    
           }
           if (Phaser.Input.Keyboard.JustDown(keyRight)) {
+            this.bgm.stop();
             //hard difficulty
             game.settings = {
               spaceshipSpeed: 4,
